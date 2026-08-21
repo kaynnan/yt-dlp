@@ -17,7 +17,6 @@ from bundle.pyinstaller import (
     resolve_onedir,
     set_version_info,
 )
-from devscripts.make_gui_icons import write_icns
 from devscripts.utils import read_version
 
 BASE_NAME = 'yt-dlp-gui'
@@ -34,6 +33,8 @@ def main():
 
     windowed, icon = ['--windowed'], 'devscripts/logo.ico'
     if OS_NAME == 'darwin':
+        from devscripts.make_gui_icons import write_icns
+
         windowed.append(f'--osx-bundle-identifier={BUNDLE_IDENTIFIER}')
         icon = write_icns(ICNS_PATH)
 

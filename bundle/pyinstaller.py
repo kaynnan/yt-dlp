@@ -50,11 +50,11 @@ def announce(base_name, version, final_file, opts):
     print(f'Destination: {final_file}\n')
 
 
-def base_options(name):
+def base_options(name, icon='devscripts/logo.ico'):
     """@returns the PyInstaller options shared by every bundle"""
     return [
         f'--name={name}',
-        '--icon=devscripts/logo.ico',
+        f'--icon={icon}',
         '--upx-exclude=vcruntime140.dll',
         # setuptools and packaging are PyInstaller runtime dependencies,
         # but would be collected due to cffi's imports if we don't exclude

@@ -17,10 +17,12 @@ from bundle.pyinstaller import (
     resolve_onedir,
     set_version_info,
 )
+from devscripts.make_gui_icons import write_icns
 from devscripts.utils import read_version
 
 BASE_NAME = 'yt-dlp-gui'
 BUNDLE_IDENTIFIER = 'org.yt-dlp.gui'
+ICNS_PATH = 'build/yt-dlp-gui.icns'
 
 
 def main():
@@ -30,11 +32,12 @@ def main():
     name, final_file = exe(onedir, BASE_NAME)
     announce(BASE_NAME, version, final_file, opts)
 
-    windowed = ['--windowed']
+    windowed, icon = ['--windowed'], 'devscripts/logo.ico'
     if OS_NAME == 'darwin':
         windowed.append(f'--osx-bundle-identifier={BUNDLE_IDENTIFIER}')
+        icon = write_icns(ICNS_PATH)
 
-    opts = [*base_options(name), *windowed, *opts, 'yt_dlp/gui/__main__.py']
+    opts = [*base_options(name, icon), *windowed, *opts, 'yt_dlp/gui/__main__.py']
 
     print(f'Running PyInstaller with {opts}')
     run_pyinstaller(opts)
